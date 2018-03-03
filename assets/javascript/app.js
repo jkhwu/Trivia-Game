@@ -93,17 +93,19 @@ const questionBank = [{
 
 var numQuestions;
 var numQuestionsAsked;
-var numCorrectAnswers;
-var numIncorrectAnswers;
+var numCorrect;
+var numIncorrect;
 var numUnanswered;
+var currQuestion;
+var currAnswer;
+var userGuess;
 
 var timeLimit;
 var timeLeft;
 
 var questions;
 var intervalId;
-var currQuestion;
-var currAnswer;
+
 
 var isGameOver;
 
@@ -127,24 +129,30 @@ function clearPage() {
 function startGame() {
     numQuestions = 8;
     numQuestionsAsked = 0;
-    numCorrectAnswers = 0;
-    numIncorrectAnswers = 0;
+    numCorrect = 0;
+    numIncorrect = 0;
     numUnanswered = 0;
+    currQuestion = "";
+    currAnswer = "";
+    userGuess = "";
     timeLimit = 5; //seconds
     timeLeft = timeLimit;
     isGameOver = false;
 
     isQuestionUp = false;
-    isCorrect = false;
+
 
     $("#startBtn").hide();
     pickQuestions();
     nextQuestion();
+
+    console.log("QuestionsAsked: " + numQuestionsAsked);
 }
 
 function pickQuestions() {
     questions = questionBank.slice();
     questions = shuffle(questions).slice(0, 8);
+    console.log(JSON.stringify(questions));
 }
 
 function shuffle(a) {
@@ -159,8 +167,6 @@ function nextQuestion() {
     if (numQuestions === numQuestionsAsked) isGameOver = true;
     if (!isGameOver) {
         displayQuestion();
-        startTimer();
-        onChoiceClick();
     } else {
         displayEndPage();
     }
@@ -171,33 +177,35 @@ function displayQuestion() {
     $("#timeText").html(`Time Remaining: <span id="countdown">${timeLeft}</span> seconds`);
     currQuestion = questions[numQuestionsAsked].q
     currAnswer = questions[numQuestionsAsked].choices[questions[numQuestionsAsked].aIndex];
-    $("#qText").text(currQuestion);
+    userGuess = "";
+    $("#qText").text(`${numQuestionsAsked+1}. ${currQuestion}`);
     $("#0").text(questions[numQuestionsAsked].choices[0]);
     $("#1").text(questions[numQuestionsAsked].choices[1]);
     $("#2").text(questions[numQuestionsAsked].choices[2]);
     $("#3").text(questions[numQuestionsAsked].choices[3]);
+    startTimer();
+    onChoiceClick();
 }
 
 function startTimer() {
-    clearInterval(intervalId); // add this to keep from accelerating
+    // clearInterval(intervalId); // add this to keep from accelerating
     intervalId = setInterval(decrement, 1000);
 }
 
 function decrement() {
     timeLeft--;
     $("#countdown").text(timeLeft);
-    if (timeLeft <= 0) {
+    if (timeLeft === 0) {
         stopTime();
         displayTimeoutPage();
-        setTimeout(nextQuestion, 5000);
+    } else if (timeLeft < 0) {
+        stopTime();
     }
 }
 
 function stopTime() {
     clearInterval(intervalId);
     timeLeft = timeLimit;
-    numQuestionsAsked++;
-    console.log("numQuestionsAsked: " + numQuestionsAsked);
 }
 
 function displayTimeoutPage() {
@@ -206,20 +214,60 @@ function displayTimeoutPage() {
     $("#detailsText").html(`<p>The correct answer was: ${currAnswer}`);
     $("img").attr("src", questions[numQuestionsAsked].image).attr("alt", currAnswer).show();
     numUnanswered++;
+    numQuestionsAsked++;
     console.log("numUnanswered: " + numUnanswered);
+    console.log("numQuestionsAsked: " + numQuestionsAsked);
+    setTimeout(nextQuestion, 5000);
 }
 
 function onChoiceClick() {
     $(".choice").click(function() {
         stopTime();
+        userGuess = this.textContent;
+        console.log("----------------");
+        console.log("You chose: " + userGuess);
         console.log(this.textContent === currAnswer);
+        if (isCorrect) {
+            displayCorrectPage();
+        } else {
+            displayIncorrectPage();
+        }
     });
+}
+
+function isCorrect() {
+    if (userGuess === currAnswer) return true;
+    else return false;
+}
+
+function displayCorrectPage() {
+    clearPage();
+    $("#resultsText").text(`Correct, the answer is ${currAnswer}!`);
+    $("img").attr("src", questions[numQuestionsAsked].image).attr("alt", currAnswer).show();
+    numCorrect++;
+    console.log("numCorrect: " + numIncorrect);
+    numQuestionsAsked++;
+    console.log("numQuestionsAsked: " + numQuestionsAsked);
+    setTimeout(nextQuestion, 5000);
+}
+
+function displayIncorrectPage() {
+    clearPage();
+    $("#resultsText").text("Nope!");
+    $("#detailsText").html(`<p>The correct answer was: ${currAnswer}`);
+    $("img").attr("src", questions[numQuestionsAsked].image).attr("alt", currAnswer).show();
+    numIncorrect++;
+    console.log("numIncorrect: " + numIncorrect);
+    numQuestionsAsked++;
+    console.log("numQuestionsAsked: " + numQuestionsAsked);
+    setTimeout(nextQuestion, 5000);
 }
 
 function displayEndPage() {
     clearPage();
     $("#resultsText").text("All done, here's how you did!");
-    $("#detailsText").html(`<p>Correct Answers: ${numCorrectAnswers}</p><p>Incorrect Answers: ${numIncorrectAnswers}</p><p>Unanswered: ${numUnanswered}</p>`);
+    $("#detailsText").html(`<p>Correct Answers: ${numCorrect}</p><p>Incorrect Answers: ${numIncorrect}</p><p>Unanswered: ${numUnanswered}</p>`);
+    $("#startBtn").show().text("START OVER").click(startGame);
 }
 
 // OBJECTS
