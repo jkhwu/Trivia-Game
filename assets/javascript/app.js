@@ -22,7 +22,7 @@ function displayStartPage() {
 
 function clearPage() {
     $("#timeText, #qText, .choice, #resultsText, #detailsText").empty();
-    $("img").hide();
+    $("img").attr("src", "").hide();
     $("#startBtn").hide();
 }
 
