@@ -35,9 +35,9 @@ function startGame() {
     currQuestion = "";
     currAnswer = "";
     userGuess = "";
-    timeLimit = 1; //seconds, change for testing
+    timeLimit = 5; //seconds, change for testing
     timeLeft = timeLimit;
-    waitTime = 1000; //ms, change for testing
+    waitTime = 5000; //ms, change for testing
     isGameOver = false;
     $("#startBtn").hide();
     pickQuestions();
