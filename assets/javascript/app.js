@@ -99,20 +99,11 @@ var numUnanswered;
 var currQuestion;
 var currAnswer;
 var userGuess;
-
 var timeLimit;
 var timeLeft;
-
 var questions;
 var intervalId;
-
-
 var isGameOver;
-
-var isQuestionUp;
-var isCorrect;
-
-
 
 // FUNCTIONS
 function startPage() {
@@ -138,14 +129,9 @@ function startGame() {
     timeLimit = 5; //seconds
     timeLeft = timeLimit;
     isGameOver = false;
-
-    isQuestionUp = false;
-
-
     $("#startBtn").hide();
     pickQuestions();
     nextQuestion();
-
     console.log("QuestionsAsked: " + numQuestionsAsked);
 }
 
@@ -188,18 +174,16 @@ function displayQuestion() {
 }
 
 function startTimer() {
-    // clearInterval(intervalId); // add this to keep from accelerating
-    intervalId = setInterval(decrement, 1000);
+    clearInterval(intervalId); // add this to keep from accelerating
+    intervalId = setInterval(function() { decrement() }, 1000);
 }
 
 function decrement() {
     timeLeft--;
     $("#countdown").text(timeLeft);
-    if (timeLeft === 0) {
+    if (timeLeft <= 0) {
         stopTime();
         displayTimeoutPage();
-    } else if (timeLeft < 0) {
-        stopTime();
     }
 }
 
@@ -221,13 +205,13 @@ function displayTimeoutPage() {
 }
 
 function onChoiceClick() {
-    $(".choice").click(function() {
+    $(".choice").off("click").on("click", function() {
         stopTime();
         userGuess = this.textContent;
         console.log("----------------");
         console.log("You chose: " + userGuess);
         console.log(this.textContent === currAnswer);
-        if (isCorrect) {
+        if (userGuess === currAnswer) {
             displayCorrectPage();
         } else {
             displayIncorrectPage();
@@ -235,17 +219,12 @@ function onChoiceClick() {
     });
 }
 
-function isCorrect() {
-    if (userGuess === currAnswer) return true;
-    else return false;
-}
-
 function displayCorrectPage() {
     clearPage();
     $("#resultsText").text(`Correct, the answer is ${currAnswer}!`);
     $("img").attr("src", questions[numQuestionsAsked].image).attr("alt", currAnswer).show();
     numCorrect++;
-    console.log("numCorrect: " + numIncorrect);
+    console.log("numCorrect: " + numCorrect);
     numQuestionsAsked++;
     console.log("numQuestionsAsked: " + numQuestionsAsked);
     setTimeout(nextQuestion, 5000);
@@ -269,9 +248,6 @@ function displayEndPage() {
     $("#detailsText").html(`<p>Correct Answers: ${numCorrect}</p><p>Incorrect Answers: ${numIncorrect}</p><p>Unanswered: ${numUnanswered}</p>`);
     $("#startBtn").show().text("START OVER").click(startGame);
 }
-
-// OBJECTS
-
 
 // CALLS
 startPage();
