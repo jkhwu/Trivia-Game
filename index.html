@@ -7,28 +7,32 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap CSS jQuery-->
+    <!-- Bootstrap, jQuery-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 
     <!-- My Links -->
     <link rel="stylesheet" href="assets/css/style.css">
+    <link href="https://fonts.googleapis.com/css?family=Jomhuria|Limelight|Special+Elite" rel="stylesheet">
 </head>
 
 <body>
-    <h1>Broadway Musicals Trivia!</h1>
+    <main class="container jumbotron">
+        <h1>Broadway Musicals Trivia!</h1>
+        <hr class="my-4">
+        <p id="timeText">Time Remaining: <span id="countdown">#countdown</span> seconds</p>
+        <p id="qText">#qText</p>
+        <p id="0" class="choice">.choice #0</p>
+        <p id="1" class="choice">.choice #1</p>
+        <p id="2" class="choice">.choice #2</p>
+        <p id="3" class="choice">.choice #3</p>
+        <p id="resultsText">#resultsText</p>
+        <p id="detailsText">#detailsText</p>
+        <img>
 
-    <p id="timeText">Time Remaining: <span id="countdown">#countdown</span> seconds</p>
-    <p id="qText">#qText</p>
-    <p id="0" class="choice">.choice #0</p>
-    <p id="1" class="choice">.choice #1</p>
-    <p id="2" class="choice">.choice #2</p>
-    <p id="3" class="choice">.choice #3</p>
-    <p id="resultsText">#resultsText</p>
-    <p id="detailsText">#detailsText</p>
-    <img>
+        <button id="startBtn" type="button" class="btn btn-lg btn-dark">START</button>
+    </main>
 
-    <button id="startBtn">START</button>
     <!-- Optional JavaScript -->
     <script src="assets/javascript/app.js"></script>
 

@@ -1,0 +1,53 @@
+body {
+    background-image: url("../images/bg.jpg");
+    background-size: 100%;
+    font-family: 'Special Elite', cursive;
+    font-size: 1.5em;
+}
+
+.jumbotron {
+    margin-top: 5%;
+    text-align: center;
+}
+
+#startBtn {
+    padding: 15px 25px 8px 25px;
+    font-size: 1em;
+}
+
+h1 {
+    font-family: 'Limelight', cursive;
+}
+
+#qText {
+    font-family: 'Jomhuria', cursive;
+    font-size: 2em;
+    line-height: .8em;
+}
+
+em {
+    font-size: 1.2em;
+    color: rgb(206, 0, 0);
+    font-weight: bolder;
+}
+
+.correct {
+    font-size: 1.2em;
+    color: rgb(0, 136, 32);
+    font-style: italic;
+    font-weight: bolder;
+}
+
+#resultsText {
+    font-size: 1.2em;
+    font-weight: bolder;
+}
+
+#detailsText {
+    font-size: .8em;
+}
+
+img {
+    min-width: 40%;
+    max-width: 100%;
+}
