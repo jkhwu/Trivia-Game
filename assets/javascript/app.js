@@ -42,13 +42,13 @@ function startGame() {
     $("#startBtn").hide();
     pickQuestions();
     nextQuestion();
-    // console.log("QuestionsAsked: " + numQuestionsAsked);
+    console.log("QuestionsAsked: " + numQuestionsAsked);
 }
 
 function pickQuestions() {
     questions = questionBank.slice();
     questions = shuffle(questions).slice(0, 8);
-    // console.log(JSON.stringify(questions));
+    console.log(JSON.stringify(questions));
 }
 
 function shuffle(a) {
@@ -109,8 +109,8 @@ function displayTimeoutPage() {
     $("img").attr("src", questions[numQuestionsAsked].image).attr("alt", currAnswer).show();
     numUnanswered++;
     numQuestionsAsked++;
-    // console.log("numUnanswered: " + numUnanswered);
-    // console.log("numQuestionsAsked: " + numQuestionsAsked);
+    console.log("numUnanswered: " + numUnanswered);
+    console.log("numQuestionsAsked: " + numQuestionsAsked);
     setTimeout(nextQuestion, waitTime);
 }
 
@@ -118,8 +118,8 @@ function onChoiceClick() {
     $(".choice").off("click").click(function() {
         stopTime();
         userGuess = this.textContent;
-        // console.log("You chose: " + userGuess);
-        // console.log(this.textContent === currAnswer);
+        console.log("You chose: " + userGuess);
+        console.log(this.textContent === currAnswer);
         if (userGuess === currAnswer) {
             displayCorrectPage();
         } else {
@@ -134,9 +134,9 @@ function displayCorrectPage() {
     $("#detailsText").html(`The answer was <span class="correct">${currAnswer}</span>`);
     $("img").attr("src", questions[numQuestionsAsked].image).attr("alt", currAnswer).show();
     numCorrect++;
-    // console.log("numCorrect: " + numCorrect);
+    console.log("numCorrect: " + numCorrect);
     numQuestionsAsked++;
-    // console.log("numQuestionsAsked: " + numQuestionsAsked);
+    console.log("numQuestionsAsked: " + numQuestionsAsked);
     setTimeout(nextQuestion, waitTime);
 }
 
@@ -146,9 +146,9 @@ function displayIncorrectPage() {
     $("#detailsText").html(`<p>The correct answer was <em>${currAnswer}</em>`);
     $("img").attr("src", questions[numQuestionsAsked].image).attr("alt", currAnswer).show();
     numIncorrect++;
-    // console.log("numIncorrect: " + numIncorrect);
+    console.log("numIncorrect: " + numIncorrect);
     numQuestionsAsked++;
-    // console.log("numQuestionsAsked: " + numQuestionsAsked);
+    console.log("numQuestionsAsked: " + numQuestionsAsked);
     setTimeout(nextQuestion, waitTime);
 }
 
